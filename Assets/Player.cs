@@ -5,9 +5,11 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     // Create a parameter available in the Unity IDE
-    public float speed = 10.0f;
+    public float speed = 6.0f;
     // Store the Player movement velocity
     Vector3 velocity;
+    // Store the number of coins collected
+    public int coinCount = 0;
 
     // Create a variable to store the reference to the Game Object Component "Rigidbody"
     Rigidbody rb;
@@ -33,5 +35,15 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         rb.position += velocity * Time.fixedDeltaTime;
+    }
+
+    private void OnTriggerEnter(Collider triggerCollider)
+    {
+        // Adding the "Coin" tag to each coin makes detection easy
+        if (triggerCollider.tag == "Coin")
+        {
+            Destroy(triggerCollider.gameObject);
+            coinCount++;
+        }
     }
 }
